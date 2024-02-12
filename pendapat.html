@@ -111,9 +111,22 @@
                 li.classList.add("pendapat-box");
 
                 const tanggal = document.createElement("div");
+                 const timestamp = parseInt(pendapat.tanggal);
+                  const date = new Date(timestamp * 1000); // Konversi ke milidetik (timestamp dalam detik)
+
+// Mendapatkan informasi tanggal dan waktu
+const tahun = date.getFullYear();
+const bulan = date.getMonth() + 1; // Perlu ditambah 1 karena indeks bulan dimulai dari 0
+const hari = date.getDate();
+const jam = date.getHours();
+const menit = date.getMinutes();
+const detik = date.getSeconds();
+
+// Membuat format tanggal dan waktu yang lebih mudah dibaca
+const formatTanggalWaktu = `${tahun}-${bulan < 10 ? '0' + bulan : bulan}-${hari < 10 ? '0' + hari : hari} ${jam < 10 ? '0' + jam : jam}:${menit < 10 ? '0' + menit : menit}:${detik < 10 ? '0' + detik : detik}`;
 
                 tanggal.classList.add("tanggal");
-                tanggal.textContent = pendapat.tanggal;
+                tanggal.textContent = pendapat.formatTanggalWaktu;
                 li.appendChild(tanggal);
 
                 const isiPendapat = document.createElement("div");
@@ -143,8 +156,21 @@
                   li.classList.add("pendapat-box");
 
                   const tanggal = document.createElement("div");
+                  const timestamp = parseInt(pendapat.tanggal);
+                  const date = new Date(timestamp * 1000); // Konversi ke milidetik (timestamp dalam detik)
+
+// Mendapatkan informasi tanggal dan waktu
+const tahun = date.getFullYear();
+const bulan = date.getMonth() + 1; // Perlu ditambah 1 karena indeks bulan dimulai dari 0
+const hari = date.getDate();
+const jam = date.getHours();
+const menit = date.getMinutes();
+const detik = date.getSeconds();
+
+// Membuat format tanggal dan waktu yang lebih mudah dibaca
+const formatTanggalWaktu = `${tahun}-${bulan < 10 ? '0' + bulan : bulan}-${hari < 10 ? '0' + hari : hari} ${jam < 10 ? '0' + jam : jam}:${menit < 10 ? '0' + menit : menit}:${detik < 10 ? '0' + detik : detik}`;
                   tanggal.classList.add("tanggal");
-                  tanggal.textContent = pendapat.tanggal;
+                  tanggal.textContent = pendapat.formatTanggalWaktu;
                   li.appendChild(tanggal);
 
                   const isiPendapat = document.createElement("div");
