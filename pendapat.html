@@ -126,7 +126,7 @@ const detik = date.getSeconds();
 const formatTanggalWaktu = `${tahun}-${bulan < 10 ? '0' + bulan : bulan}-${hari < 10 ? '0' + hari : hari} ${jam < 10 ? '0' + jam : jam}:${menit < 10 ? '0' + menit : menit}:${detik < 10 ? '0' + detik : detik}`;
 
                 tanggal.classList.add("tanggal");
-                tanggal.textContent = pendapat.formatTanggalWaktu;
+                tanggal.textContent = formatTanggalWaktu;
                 li.appendChild(tanggal);
 
                 const isiPendapat = document.createElement("div");
@@ -170,7 +170,7 @@ const detik = date.getSeconds();
 // Membuat format tanggal dan waktu yang lebih mudah dibaca
 const formatTanggalWaktu = `${tahun}-${bulan < 10 ? '0' + bulan : bulan}-${hari < 10 ? '0' + hari : hari} ${jam < 10 ? '0' + jam : jam}:${menit < 10 ? '0' + menit : menit}:${detik < 10 ? '0' + detik : detik}`;
                   tanggal.classList.add("tanggal");
-                  tanggal.textContent = pendapat.formatTanggalWaktu;
+                  tanggal.textContent = formatTanggalWaktu;
                   li.appendChild(tanggal);
 
                   const isiPendapat = document.createElement("div");
