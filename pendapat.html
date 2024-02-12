@@ -111,19 +111,9 @@
                 li.classList.add("pendapat-box");
 
                 const tanggal = document.createElement("div");
-                var createdAtString = pendapat.createdAt;
-                var createdAt = new Date(createdAtString);
-
-                var formattedDate = createdAt.toLocaleString("id-ID", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                  hour: "numeric",
-                  minute: "numeric",
-                });
 
                 tanggal.classList.add("tanggal");
-                tanggal.textContent = formattedDate;
+                tanggal.textContent = pendapat.tanggal;
                 li.appendChild(tanggal);
 
                 const isiPendapat = document.createElement("div");
@@ -154,7 +144,7 @@
 
                   const tanggal = document.createElement("div");
                   tanggal.classList.add("tanggal");
-                  tanggal.textContent = pendapat.waktu_pendapat;
+                  tanggal.textContent = pendapat.tanggal;
                   li.appendChild(tanggal);
 
                   const isiPendapat = document.createElement("div");
