@@ -134,7 +134,7 @@ const formatTanggalWaktu = `${tahun}-${bulan < 10 ? '0' + bulan : bulan}-${hari 
                 isiPendapat.textContent = pendapat.pendapat;
                 li.appendChild(isiPendapat);
 
-                daftarPendapat.appendChild(li);
+                daftarPendapat.insertBefore(li, daftarPendapat.firstChild);
 
                 lastDataId = pendapat.id;
               });
@@ -178,7 +178,7 @@ const formatTanggalWaktu = `${tahun}-${bulan < 10 ? '0' + bulan : bulan}-${hari 
                   isiPendapat.textContent = pendapat.pendapat;
                   li.appendChild(isiPendapat);
 
-                  daftarPendapat.appendChild(li);
+                  daftarPendapat.insertBefore(li, daftarPendapat.firstChild);
 
                   lastDataId = pendapat.id;
 
