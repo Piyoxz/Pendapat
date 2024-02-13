@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kirim Pendapat Pilpres Tahun Ini</title>
+    <title>Piyo Ganteng</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11" />
     <style>
       body {
@@ -66,12 +66,12 @@
   </head>
   <body>
     <div class="container">
-      <h2>Kirim Pendapat Pilpres Tahun Ini</h2>
+      <h2>Pesan Teman Teman Piyo</h2>
       <form action="#" method="post" id="myForm">
         <textarea
           class="areabox"
           name="pendapat"
-          placeholder="Masukkan pendapat Anda"
+          placeholder="Masukkan pesan untuk piyo"
         ></textarea>
         <button type="button" onclick="submitForm()" class="submit-btn">
           Kirim
@@ -100,7 +100,7 @@
             }),
           }).then((response) => {
             if (response.ok) {
-              location.href = "/pendapat.html";
+              location.href = "/data.html";
             }
           });
           document.getElementById("myForm").reset();
