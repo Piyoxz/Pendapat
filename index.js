@@ -289,8 +289,6 @@ async function submitForm() {
     obj.audio = fileUrl;
   }
 
-  console.log(obj)
-
   fetch("https://65ca31733b05d29307dfea81.mockapi.io/api/data", {
     method: "POST",
     headers: {
@@ -327,16 +325,34 @@ function handleFileUpload(file) {
     fileActions.style.display = "none";
 
     if (file.type.startsWith("image/") || file.type.startsWith("video/")) {
+
       audioPlayer.src = "";
       const reader = new FileReader();
 
       reader.onload = function (event) {
-        const previewImage = document.getElementById("previewImage");
-        previewImage.src = event.target.result;
-        previewImage.style.display = "flex";
-        previewImage.style.filter = "brightness(100%)";
-        audioPlayer.style.display = "none";
-        audioButton.style.display = "none";
+        const img = new Image();
+        img.src = event.target.result;
+        img.crossOrigin = "Anonymous";
+        nsfwjs.load().then((model) => { 
+            model.classify(img).then((predictions) => {
+              if (predictions[0].className === "Neutral" || predictions[0].className === "Drawing") {
+                const previewImage = document.getElementById("previewImage");
+                previewImage.src = event.target.result;
+                previewImage.style.display = "flex";
+                previewImage.style.filter = "brightness(100%)";
+                audioPlayer.style.display = "none";
+                audioButton.style.display = "none";
+              } else {
+                Swal.fire({
+                  title: "Error",
+                  text: "Gambar tidak boleh mengandung unsur pornografi",
+                  icon: "error",
+                  confirmButtonText: "OK",
+                });
+                deleteFile();
+              }
+            });
+        });
       };
 
       reader.readAsDataURL(file);
