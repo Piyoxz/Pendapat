@@ -10,6 +10,8 @@
       href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
     />
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+
       body {
         font-family: "Arial", sans-serif;
         background-color: #f5f5f5;
@@ -18,7 +20,7 @@
       }
 
       .container {
-        max-width: 800px;
+        max-width: 400px;
         margin: 0 auto;
       }
 
@@ -28,31 +30,72 @@
       }
 
       .pendapat-box {
-        background-color: #fff;
+        max-height: 400px;
         border: 1px solid #ddd;
         border-radius: 8px;
+        height: auto;
         margin-bottom: 20px;
         overflow: hidden;
         transition: transform 0.3s;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #fff;
       }
 
       .pendapat-box:hover {
         transform: translateY(-5px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
 
       .tanggal {
-        background-color: #f5f5f5;
+        background-color: #ffffff;
         color: #777;
         padding: 8px;
         border-bottom: 1px solid #ddd;
         border-radius: 8px 8px 0 0;
       }
 
-      .pendapat {
-        font-size: 16px;
+      .gambar-container {
+        text-align: center;
+      }
+
+      .gambar {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .konten-pendapat {
         padding: 20px;
-        border-top: 1px solid #ddd;
+      }
+
+      .caption {
+        font-size: 18px;
+        font-weight: bold;
+        color: black;
+      }
+
+      .audio {
+        margin-left: 10%;
+        padding: 10px;
+      }
+
+      .isi-pendapat {
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+      }
+
+      button {
+        padding: 8px 16px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
       }
 
       .back-btn {
@@ -89,114 +132,89 @@
       <ul class="pendapat-list" id="daftarPendapat"></ul>
       <div id="loading" class="loading">Memuat...</div>
     </div>
+    <script>
+      let lastDataId = null;
+      fetch("https://65ca31733b05d29307dfea81.mockapi.io/api/data")
+        .then((response) => response.json())
+        .then((data) => {
+          loading.style.display = "none";
+
+          data.forEach((pendapat) => {
+            const li = document.createElement("li");
+            li.classList.add("pendapat-box");
+
+            const kontenPendapat = document.createElement("div");
+            kontenPendapat.classList.add("tanggal");
+
+            const tanggal = document.createElement("div");
+
+            const pendapatDate = new Date(pendapat.tanggal);
+            const sekarang = new Date();
+
+            const selisihMillis = sekarang - pendapatDate;
+
+            const detikSelisih = Math.floor(selisihMillis / 1000);
+            const menitSelisih = Math.floor(detikSelisih / 60);
+            const jamSelisih = Math.floor(menitSelisih / 60);
+            const hariSelisih = Math.floor(jamSelisih / 24);
+
+            let selisihWaktu;
+
+            if (detikSelisih < 60) {
+              selisihWaktu = detikSelisih + " detik yang lalu";
+            } else if (menitSelisih < 60) {
+              selisihWaktu = menitSelisih + " menit yang lalu";
+            } else if (jamSelisih < 24) {
+              selisihWaktu = jamSelisih + " jam yang lalu";
+            } else {
+              selisihWaktu = hariSelisih + " hari yang lalu";
+            }
+
+            tanggal.textContent = selisihWaktu;
+
+            const isiPendapat = document.createElement("div");
+            isiPendapat.textContent = pendapat.pendapat;
+            isiPendapat.classList.add("caption");
+            kontenPendapat.appendChild(tanggal);
+            kontenPendapat.appendChild(isiPendapat);
+
+            li.appendChild(kontenPendapat);
+
+            if (pendapat.image) {
+              const image = document.createElement("img");
+              image.src = pendapat.image;
+              image.classList.add("gambar");
+              image.alt = "Image";
+              li.appendChild(image);
+            }
+
+            if (pendapat.audio) {
+              const audio = document.createElement("audio");
+              audio.classList.add("audio");
+              audio.controls = true;
+              const source = document.createElement("source");
+              source.src = pendapat.audio;
+              source.type = "audio/mp3";
+              audio.appendChild(source);
+              li.appendChild(audio);
+            }
+
+            daftarPendapat.insertBefore(li, daftarPendapat.firstChild);
+
+            lastDataId = pendapat.id;
+          });
+        })
+        .catch((error) => {
+          loading.textContent = "Terjadi kesalahan saat mengambil data awal.";
+        });
+    </script>
     <script
       type="text/javascript"
       src="https://cdn.jsdelivr.net/npm/toastify-js"
     ></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const daftarPendapat = document.getElementById("daftarPendapat");
-        const loading = document.getElementById("loading");
-
-        let lastDataId = null;
-
-        function loadInitialData() {
-          fetch("https://65ca31733b05d29307dfea81.mockapi.io/api/data")
-            .then((response) => response.json())
-            .then((data) => {
-              loading.style.display = "none";
-
-              data.forEach((pendapat) => {
-                const li = document.createElement("li");
-                li.classList.add("pendapat-box");
-
-                const tanggal = document.createElement("div");
-                 const timestamp = parseInt(pendapat.tanggal);
-                  const date = new Date(timestamp * 1000); // Konversi ke milidetik (timestamp dalam detik)
-
-// Mendapatkan informasi tanggal dan waktu
-const tahun = date.getFullYear();
-const bulan = date.getMonth() + 1; // Perlu ditambah 1 karena indeks bulan dimulai dari 0
-const hari = date.getDate();
-const jam = date.getHours();
-const menit = date.getMinutes();
-const detik = date.getSeconds();
-
-// Membuat format tanggal dan waktu yang lebih mudah dibaca
-const formatTanggalWaktu = `${tahun}-${bulan < 10 ? '0' + bulan : bulan}-${hari < 10 ? '0' + hari : hari} ${jam < 10 ? '0' + jam : jam}:${menit < 10 ? '0' + menit : menit}:${detik < 10 ? '0' + detik : detik}`;
-
-                tanggal.classList.add("tanggal");
-                tanggal.textContent = formatTanggalWaktu;
-                li.appendChild(tanggal);
-
-                const isiPendapat = document.createElement("div");
-                isiPendapat.classList.add("pendapat");
-                isiPendapat.textContent = pendapat.pendapat;
-                li.appendChild(isiPendapat);
-
-                daftarPendapat.insertBefore(li, daftarPendapat.firstChild);
-
-                lastDataId = pendapat.id;
-              });
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              loading.textContent =
-                "Terjadi kesalahan saat mengambil data awal.";
-            });
-        }
-
-        function loadNewData() {
-          fetch("https://65ca31733b05d29307dfea81.mockapi.io/api/data")
-            .then((response) => response.json())
-            .then((data) => {
-              data.forEach((pendapat) => {
-                if (pendapat.id > lastDataId) {
-                  const li = document.createElement("li");
-                  li.classList.add("pendapat-box");
-
-                  const tanggal = document.createElement("div");
-                  const timestamp = parseInt(pendapat.tanggal);
-                  const date = new Date(timestamp * 1000); // Konversi ke milidetik (timestamp dalam detik)
-
-// Mendapatkan informasi tanggal dan waktu
-const tahun = date.getFullYear();
-const bulan = date.getMonth() + 1; // Perlu ditambah 1 karena indeks bulan dimulai dari 0
-const hari = date.getDate();
-const jam = date.getHours();
-const menit = date.getMinutes();
-const detik = date.getSeconds();
-
-// Membuat format tanggal dan waktu yang lebih mudah dibaca
-const formatTanggalWaktu = `${tahun}-${bulan < 10 ? '0' + bulan : bulan}-${hari < 10 ? '0' + hari : hari} ${jam < 10 ? '0' + jam : jam}:${menit < 10 ? '0' + menit : menit}:${detik < 10 ? '0' + detik : detik}`;
-                  tanggal.classList.add("tanggal");
-                  tanggal.textContent = formatTanggalWaktu;
-                  li.appendChild(tanggal);
-
-                  const isiPendapat = document.createElement("div");
-                  isiPendapat.classList.add("pendapat");
-                  isiPendapat.textContent = pendapat.pendapat;
-                  li.appendChild(isiPendapat);
-
-                  daftarPendapat.insertBefore(li, daftarPendapat.firstChild);
-
-                  lastDataId = pendapat.id;
-
-                  showToast(pendapat.pendapat);
-                }
-              });
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              loading.textContent =
-                "Terjadi kesalahan saat mengambil data baru.";
-            });
-        }
-
-        loadInitialData();
-
-        setInterval(loadNewData, 5000);
-      });
+    <script type="text/javascript">
+      const daftarPendapat = document.getElementById("daftarPendapat");
+      const loading = document.getElementById("loading");
 
       function showToast(message) {
         Toastify({
@@ -210,6 +228,85 @@ const formatTanggalWaktu = `${tahun}-${bulan < 10 ? '0' + bulan : bulan}-${hari 
           },
         }).showToast();
       }
+
+      function loadNewData() {
+        console.log(lastDataId)
+        fetch("https://65ca31733b05d29307dfea81.mockapi.io/api/data")
+          .then((response) => response.json())
+          .then((data) => {
+            data.forEach((pendapat) => {
+              if (pendapat.id > lastDataId) {
+                const li = document.createElement("li");
+                li.classList.add("pendapat-box");
+
+                const kontenPendapat = document.createElement("div");
+                kontenPendapat.classList.add("tanggal");
+
+                const tanggal = document.createElement("div");
+                const pendapatDate = new Date(pendapat.tanggal);
+                const sekarang = new Date();
+
+                const selisihMillis = sekarang - pendapatDate;
+
+                const detikSelisih = Math.floor(selisihMillis / 1000);
+                const menitSelisih = Math.floor(detikSelisih / 60);
+                const jamSelisih = Math.floor(menitSelisih / 60);
+                const hariSelisih = Math.floor(jamSelisih / 24);
+
+                let selisihWaktu;
+
+                if (detikSelisih < 60) {
+                  selisihWaktu = detikSelisih + " detik yang lalu";
+                } else if (menitSelisih < 60) {
+                  selisihWaktu = menitSelisih + " menit yang lalu";
+                } else if (jamSelisih < 24) {
+                  selisihWaktu = jamSelisih + " jam yang lalu";
+                } else {
+                  selisihWaktu = hariSelisih + " hari yang lalu";
+                }
+
+                tanggal.textContent = selisihWaktu;
+
+                const isiPendapat = document.createElement("div");
+                isiPendapat.textContent = pendapat.pendapat;
+                isiPendapat.classList.add("caption");
+                kontenPendapat.appendChild(tanggal);
+                kontenPendapat.appendChild(isiPendapat);
+
+                li.appendChild(kontenPendapat);
+
+                if (pendapat.image) {
+                  const image = document.createElement("img");
+                  image.src = pendapat.image;
+                  image.classList.add("gambar");
+                  image.alt = "Image";
+                  li.appendChild(image);
+                }
+
+                if (pendapat.audio) {
+                  const audio = document.createElement("audio");
+                  audio.classList.add("audio");
+                  audio.controls = true;
+                  const source = document.createElement("source");
+                  source.src = pendapat.audio;
+                  source.type = "audio/mp3";
+                  audio.appendChild(source);
+                  li.appendChild(audio);
+                }
+
+                daftarPendapat.insertBefore(li, daftarPendapat.firstChild);
+
+                lastDataId = pendapat.id;
+
+                showToast(pendapat.pendapat);
+              }
+            });
+          })
+          .catch((error) => {
+            loading.textContent = "Terjadi kesalahan saat mengambil data baru.";
+          });
+      }
+      setInterval(loadNewData, 5000);
     </script>
   </body>
 </html>
