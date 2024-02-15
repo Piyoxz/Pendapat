@@ -269,7 +269,7 @@ async function submitForm() {
 
   document.getElementById("loadingOverlay").style.display = "flex";
 
-  console.log(fileInput)
+  console.log(fileInput.files)
 
   if (fileInput.files.length > 0) {
     const file = fileInput.files[0];
