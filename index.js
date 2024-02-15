@@ -269,6 +269,8 @@ async function submitForm() {
 
   document.getElementById("loadingOverlay").style.display = "flex";
 
+  console.log(fileInput)
+
   if (fileInput.files.length > 0) {
     const file = fileInput.files[0];
     const { fileUrl, filePath } = await uploadManager.upload({
