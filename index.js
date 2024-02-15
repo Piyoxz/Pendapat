@@ -63,6 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   fileInput.addEventListener("change", (fileInputan) => {
     if (fileInputan.target.files.length > 0) {
+      console.log(fileInputan.target.files)
       const file = fileInputan.target.files[0];
       if (
         file.type.startsWith("image/") ||
