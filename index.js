@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
     fileInputLabel.classList.remove("drag-over");
     if (e.dataTransfer.files.length > 0) {
+      console.log(e.dataTransfer)
       const file = e.dataTransfer.files[0];
       if (
         file.type.startsWith("image/") ||
@@ -63,7 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   fileInput.addEventListener("change", (fileInputan) => {
     if (fileInputan.target.files.length > 0) {
-      console.log(fileInputan.target.files)
       const file = fileInputan.target.files[0];
       if (
         file.type.startsWith("image/") ||
