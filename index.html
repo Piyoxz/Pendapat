@@ -75,12 +75,15 @@
 
     <div id="loadingOverlay">Loading...</div>
     <script>
-   if (!('someFeature' in window)) {
-    document.body.innerHTML = '';
-    document.write('<h1>This site requires a browser with the necessary features.</h1>');
+   var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+  var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  
+  if (!isChrome && !isSafari) {
+    document.body.innerHTML = ''; // Remove all content from the body
+    document.write('<h1>This site is only accessible in Chrome and Safari</h1>'); // Display a message
     setTimeout(function() {
-      window.location.href = 'about:blank';
-    }, 2000);
+      window.location.href = 'about:blank'; // Redirect to a blank page
+    }, 2000); // Redirect after 2 seconds
   }
 </script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
