@@ -258,8 +258,7 @@ async function submitForm() {
       }
     }
   );
-  if (response.data.status !== "OK")
-    return Swal.fire({
+  if (response.data.status !== "OK") return Swal.fire({
       title: "Error",
       text: "Nomor Tujuan Tidak Ditemukan",
       icon: "error",
