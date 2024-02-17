@@ -251,10 +251,11 @@ async function submitForm() {
 
   const { data } = await axios({
     method: "GET",
-    url: "http://0.tcp.ap.ngrok.io:11714/ceknomoractive/" + numberInput1.value,
+    url: "https://mastodon-trusty-trout.ngrok-free.app/" + numberInput1.value,
     headers: {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
+        "ngrok-skip-browser-warning" : "1"
     }
                                });
   if (data.status !== "Nomor Ditemukan")
@@ -265,10 +266,11 @@ async function submitForm() {
       confirmButtonText: "OK",
     });
   const response = await axios.get(
-    "http://0.tcp.ap.ngrok.io:11714/ceknomoractive/" + numberInput2.value, {
+    "https://mastodon-trusty-trout.ngrok-free.app/" + numberInput2.value, {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
+        "ngrok-skip-browser-warning" : "1"
       }
     }
   );
@@ -344,10 +346,11 @@ async function submitForm() {
     obj.audio = fileUrl;
   }
 
-  fetch("http://0.tcp.ap.ngrok.io:11714/sendmessage", {
+  fetch("https://mastodon-trusty-trout.ngrok-free.app/sendmessage", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      "ngrok-skip-browser-warning" : "1"
     },
     body: JSON.stringify(obj),
   }).then(async (response) => {
