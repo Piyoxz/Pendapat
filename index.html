@@ -105,9 +105,7 @@
     <script src="https://kirim-pesan-piyo.vercel.app/nsfw.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.19/build/js/intlTelInput.min.js"></script>
     <script>
-      if (localStorage.getItem("whatsapp")) {
-        Swal.fire("Success", "Login Berhasil", "success");
-      } else {
+      if (!localStorage.getItem("whatsapp")) {
       function showAwal(){
         Swal.fire({
           title: "Login",
@@ -170,12 +168,9 @@
     }
     </script>
     <script>
-      const input = document.querySelector("#phone");
       const input2 = document.querySelector("#phone2");
     </script>
     <script>
-      const iti = intlTelInput(input);
-      iti.setCountry("id");
       const iti2 = intlTelInput(input2);
       iti2.setCountry("id");
     </script>
