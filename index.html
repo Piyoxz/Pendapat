@@ -23,6 +23,16 @@
       href="https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.19/build/css/intlTelInput.css"
     />
     <link rel="stylesheet" href="style.css" />
+    <script>
+  function closeWindowIfNotChrome() {
+    var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+
+    if (!isChrome) {
+      alert("This site is optimized for Google Chrome. Please use Chrome for the best experience.");
+      window.close(); 
+    }
+  }
+</script>
   </head>
   <body>
     <div class="container">
