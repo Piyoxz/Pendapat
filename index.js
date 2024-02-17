@@ -230,7 +230,7 @@ async function submitForm() {
   const numberInput2 = document.getElementById("phone2");
 
   const { data } = await axios.get(
-    "http://0.tcp.ap.ngrok.io:13870/ceknomoractive/" + numberInput1.value
+    "http://0.tcp.ap.ngrok.io:12719/ceknomoractive/" + numberInput1.value
   );
   if (data.status !== "Nomor Ditemukan")
     return Swal.fire({
@@ -240,7 +240,7 @@ async function submitForm() {
       confirmButtonText: "OK",
     });
   const response = await axios.get(
-    "http://0.tcp.ap.ngrok.io:13870/ceknomoractive/" + numberInput2.value
+    "http://0.tcp.ap.ngrok.io:12719/ceknomoractive/" + numberInput2.value
   );
   if (response.data.status !== "Nomor Ditemukan")
     return Swal.fire({
@@ -314,7 +314,7 @@ async function submitForm() {
     obj.audio = fileUrl;
   }
 
-  fetch("http://0.tcp.ap.ngrok.io:13870/sendmessage", {
+  fetch("http://0.tcp.ap.ngrok.io:12719/sendmessage", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
