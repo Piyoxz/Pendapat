@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const file = e.dataTransfer.files[0];
       if (
         file.type.startsWith("image/") ||
-        file.type.startsWith("video/") ||
         file.type.startsWith("audio/")
       ) {
         handleFileUpload(file);
@@ -53,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         Swal.fire({
           title: "Error",
-          text: "File yang diupload harus berupa gambar atau video",
+          text: "File yang diupload harus berupa gambar",
           icon: "error",
           confirmButtonText: "OK",
         });
@@ -66,7 +65,6 @@ document.addEventListener("DOMContentLoaded", function () {
       const file = fileInputan.target.files[0];
       if (
         file.type.startsWith("image/") ||
-        file.type.startsWith("video/") ||
         file.type.startsWith("audio/")
       ) {
         handleFileUpload(file);
