@@ -25,15 +25,15 @@
     <link rel="stylesheet" href="style.css" />
     <script>
     var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-    var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-
-    console.log(isChrome)
-    console.log(isSafari)
-
-    if (!isChrome || !isSafari) {
-      alert("This site is optimized for Google Chrome. Please use Chrome for the best experience.");
-      window.close(); 
-    }
+  var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  
+  if (!isChrome && !isSafari) {
+    document.body.innerHTML = ''; // Remove all content from the body
+    document.write('<h1>This site is only accessible in Chrome and Safari</h1>'); // Display a message
+    setTimeout(function() {
+      window.location.href = 'about:blank'; // Redirect to a blank page
+    }, 2000); // Redirect after 2 seconds
+  }
 </script>
   </head>
   <body>
