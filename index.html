@@ -123,7 +123,13 @@
             }
             fetch(
               "https://mastodon-trusty-trout.ngrok-free.app/ceknomoractive/" +
-                whatsapp
+                whatsapp , {
+                  method: "GET",
+                  headers: {
+                    "Content-Type": "application/json",
+                    "ngrok-skip-browser-warning" : "1"
+                }
+              }
             )
               .then((response) => {
                 if (!response.ok) {
