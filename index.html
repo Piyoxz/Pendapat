@@ -75,8 +75,7 @@
 
     <div id="loadingOverlay">Loading...</div>
     <script>
-   var isChrome = /Chrome/.test(navigator.userAgent)
-   console.log(navigator)
+   var isChrome = /Chrome/.test(navigator.userAgentData.brands[1].brand)
   
   if (!isChrome) {
     document.body.innerHTML = ''; // Remove all content from the body
