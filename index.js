@@ -239,6 +239,16 @@ async function submitForm() {
     return;
   }
 
+  if (numberInput1.value === numberInput2.value) {
+    Swal.fire({
+      title: "Error",
+      text: "Nomor pengirim dan penerima tidak boleh sama",
+      icon: "error",
+      confirmButtonText: "OK",
+    });
+    return;
+  }
+
   const { data } = await axios.get(
     "http://0.tcp.ap.ngrok.io:12719/ceknomoractive/" + numberInput1.value
   );
@@ -329,7 +339,7 @@ async function submitForm() {
     headers: {
       "Content-Type": "application/json",
     },
-    body: obj,
+    body: JSON.stringify(obj),
   }).then(async (response) => {
     if (response.ok) {
       await Swal.fire({
