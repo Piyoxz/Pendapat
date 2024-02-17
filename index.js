@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
   // recordingInterval = null;
   const textArea = document.querySelector("textarea");
+  const submitButton = document.getElementById("submitButton");
   // const fileInput = document.getElementById("fileInput");
   // const audioPlayer = document.getElementById("audioPlayer");
   // const fileInputLabel = document.getElementById("fileInputLabel");
