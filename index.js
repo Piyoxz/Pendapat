@@ -239,7 +239,7 @@ async function submitForm() {
     return;
   }
 
-  if (whatsapp === numberInput2.value) {
+  if (number1 === numberInput2.value) {
     Swal.fire({
       title: "Error",
       text: "Nomor pengirim dan penerima tidak boleh sama",
