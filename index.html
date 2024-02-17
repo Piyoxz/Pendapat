@@ -116,6 +116,7 @@
             '<input type="text" id="whatsapp" class="swal2-input" placeholder="Nomor Whatsapp">',
           confirmButtonText: "Daftar & Login",
           focusConfirm: false,
+          allowOutsideClick: false,
           preConfirm: () => {
             const whatsapp = Swal.getPopup().querySelector("#whatsapp").value;
             if (!whatsapp) {
