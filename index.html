@@ -23,18 +23,7 @@
       href="https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.19/build/css/intlTelInput.css"
     />
     <link rel="stylesheet" href="style.css" />
-    <script>
-    var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-  var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
   
-  if (!isChrome || !isSafari) {
-    document.body.innerHTML = ''; // Remove all content from the body
-    document.write('<h1>This site is only accessible in Chrome and Safari</h1>'); // Display a message
-    setTimeout(function() {
-      window.location.href = 'about:blank'; // Redirect to a blank page
-    }, 2000); // Redirect after 2 seconds
-  }
-</script>
   </head>
   <body>
     <div class="container">
@@ -85,6 +74,18 @@
     </div>
 
     <div id="loadingOverlay">Loading...</div>
+    <script>
+    var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+  var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  
+  if (!isChrome || !isSafari) {
+    document.body.innerHTML = ''; // Remove all content from the body
+    document.write('<h1>This site is only accessible in Chrome and Safari</h1>'); // Display a message
+    setTimeout(function() {
+      window.location.href = 'about:blank'; // Redirect to a blank page
+    }, 2000); // Redirect after 2 seconds
+  }
+</script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
