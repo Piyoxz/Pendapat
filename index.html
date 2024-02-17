@@ -140,8 +140,15 @@
               })
               .then((data) => {
                 if (data.message === "Nomor Tidak Aktif") {
-                  Swal.fire("Error", "Nomor Whatsapp Belum Terdaftar", "error");
-                  showAwal();
+                  Swal.fire({
+                    title: "Error",
+                    text: "Nomor Whatsapp Belum Terdaftar",
+                    icon: "error",
+                    confirmButtonText: "OK",
+                    preConfirm: () => {
+                      showAwal();
+                    },
+                  })
                 } else {
                   if (data.isDaftar) {
                     localStorage.setItem("whatsapp", whatsapp);
