@@ -24,15 +24,16 @@
     />
     <link rel="stylesheet" href="style.css" />
     <script>
-  function closeWindowIfNotChrome() {
     var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+    var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
-    if (!isChrome) {
+    console.log(isChrome)
+    console.log(isSafari)
+
+    if (!isChrome && !isSafari) {
       alert("This site is optimized for Google Chrome. Please use Chrome for the best experience.");
       window.close(); 
     }
-  }
-  closeWindowIfNotChrome()
 </script>
   </head>
   <body>
