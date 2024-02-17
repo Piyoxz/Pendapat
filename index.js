@@ -365,6 +365,16 @@ async function submitForm() {
       document.getElementById("loadingOverlay").style.display = "none";
       location.reload();
     }
+  })
+  .catch((error) => {
+    console.error("Error:", error);
+    Swal.fire({
+      title: "Error",
+      text: "Pesan Gagal Dikirim",
+      icon: "error",
+      confirmButtonText: "OK",
+    });
+    document.getElementById("loadingOverlay").style.display = "none";
   });
 
   document.getElementById("myForm").reset();
