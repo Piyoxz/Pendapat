@@ -82,54 +82,6 @@
             required
           />
         </div>
-        <div class="separator"></div>
-        <div class="file-input-container" id="fileInputContainer">
-          <input
-            type="file"
-            name="fileInput"
-            id="fileInput"
-            class="file-input"
-            accept="image/*, video/*, audio/*"
-          />
-          <label for="fileInput" class="file-input-label" id="fileInputLabel">
-            Drag & Drop your image, video, or voice recording here, or click to
-            browse
-          </label>
-          <audio
-            id="audioPlayer"
-            controls
-            src="test.mp3"
-            style="width: 100%; margin-top: 10px; display: none"
-          >
-            Your browser does not support the audio element.
-          </audio>
-          <div class="file-preview" id="filePreview">
-            <div class="file-actions" id="fileActions">
-              <span class="file-action" onclick="editFile()">✎</span>
-              <span class="file-action" onclick="deleteFile()">❌</span>
-            </div>
-            <img id="previewImage" alt="Preview" src="placeholder-image.jpg" />
-          </div>
-        </div>
-        <div class="separator"></div>
-        <button
-          type="button"
-          onclick="toggleRecording()"
-          class="record-btn"
-          id="recordButton"
-        >
-          <i class="fas fa-microphone"></i> Record Audio
-        </button>
-        <button
-          type="button"
-          onclick="deleteRecording()"
-          class="delete-recording-btn"
-          id="deleteRecordingButton"
-          style="display: none"
-        >
-          <i class="fas fa-trash"></i> Delete Recording
-        </button>
-        <div id="audioStatus"></div>
         <button
           type="button"
           onclick="submitForm()"
