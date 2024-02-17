@@ -278,7 +278,7 @@ async function submitForm() {
   let date = new Date();
 
   let obj = {
-    from: whatsapp,
+    from: number1,
     to: numberInput2.value,
     tanggal: date,
     caption: null,
