@@ -251,7 +251,7 @@ async function submitForm() {
 
   const { data } = await axios({
     method: "GET",
-    url: "https://mastodon-trusty-trout.ngrok-free.app/" + numberInput1.value,
+    url: "https://mastodon-trusty-trout.ngrok-free.app/ceknomoractive/" + numberInput1.value,
     headers: {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
@@ -266,7 +266,7 @@ async function submitForm() {
       confirmButtonText: "OK",
     });
   const response = await axios.get(
-    "https://mastodon-trusty-trout.ngrok-free.app/" + numberInput2.value, {
+    "https://mastodon-trusty-trout.ngrok-free.app/ceknomoractive/" + numberInput2.value, {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
