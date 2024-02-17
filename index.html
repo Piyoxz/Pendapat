@@ -108,6 +108,7 @@
       if (localStorage.getItem("whatsapp")) {
         Swal.fire("Success", "Login Berhasil", "success");
       } else {
+      function showAwal(){
         Swal.fire({
           title: "Login",
           html:
@@ -133,16 +134,12 @@
               .then((data) => {
                 if (data.message === "Nomor Tidak Aktif") {
                   Swal.fire("Error", "Nomor Whatsapp Belum Terdaftar", "error");
+                  showAwal();
                 } else {
                   if (data.isDaftar) {
                     localStorage.setItem("whatsapp", whatsapp);
                     Swal.fire("Success", "Login Berhasil", "success");
                   } else {
-                    Swal.fire(
-                      "Error",
-                      "Nomor Whatsapp Belum Terdaftar",
-                      "error"
-                    );
                     location.replace(
                       "https://api.whatsapp.com/send/?phone=628567316484&text=Daftar&type=phone_number&app_absent=0"
                     );
@@ -155,6 +152,7 @@
           },
         });
       }
+    }
     </script>
     <script>
       const input = document.querySelector("#phone");
