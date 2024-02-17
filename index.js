@@ -226,10 +226,10 @@ async function submitForm() {
   const textArea = document.getElementById("textArea");
   // const fileInput = document.getElementById("fileInput");
   // const audioPlayer = document.getElementById("audioPlayer");
-  const numberInput1 = document.getElementById("phone");
   const numberInput2 = document.getElementById("phone2");
+  const number1 = localStorage.getItem('whatsapp');
 
-  if (numberInput1.value === "" || numberInput2.value === "") {
+  if (numberInput2.value === "") {
     Swal.fire({
       title: "Error",
       text: "Nomor tidak boleh kosong",
@@ -239,7 +239,7 @@ async function submitForm() {
     return;
   }
 
-  if (numberInput1.value === numberInput2.value) {
+  if (whatsapp === numberInput2.value) {
     Swal.fire({
       title: "Error",
       text: "Nomor pengirim dan penerima tidak boleh sama",
@@ -249,22 +249,6 @@ async function submitForm() {
     return;
   }
 
-  const { data } = await axios({
-    method: "GET",
-    url: "https://mastodon-trusty-trout.ngrok-free.app/ceknomoractive/" + numberInput1.value,
-    headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json",
-        "ngrok-skip-browser-warning" : "1"
-    }
-                               });
-  if (data.status !== "Nomor Ditemukan")
-    return Swal.fire({
-      title: "Error",
-      text: "Nomor Tidak Ditemukan",
-      icon: "error",
-      confirmButtonText: "OK",
-    });
   const response = await axios.get(
     "https://mastodon-trusty-trout.ngrok-free.app/ceknomoractive/" + numberInput2.value, {
       headers: {
@@ -292,14 +276,10 @@ async function submitForm() {
     return;
   }
 
-  const uploadManager = new Bytescale.UploadManager({
-    apiKey: "public_FW25buT65cd3vnbpp7r81pwyCPLn",
-  });
-
   let date = new Date();
 
   let obj = {
-    from: numberInput1.value,
+    from: whatsapp,
     to: numberInput2.value,
     tanggal: date,
     caption: null,
