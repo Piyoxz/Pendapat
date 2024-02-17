@@ -3,25 +3,83 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta property="og:image" content="https://avatars2.githubusercontent.com/u/68207798?s=400&u=29439908cd661d11443391cb74f5b07267b71117&v=4">
     <title>Piyo Ganteng</title>
-    <link rel="icon" href="https://avatars2.githubusercontent.com/u/68207798?s=400&u=29439908cd661d11443391cb74f5b07267b71117&v=4">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+    />
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.19/build/css/intlTelInput.css"
     />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="container">
-      <h2>Pesan Teman Teman Piyo</h2>
+      <h2>Confess Bot</h2>
       <form action="#" method="post" id="myForm">
         <textarea
           class="areabox"
           name="pendapat"
           id="textArea"
-          placeholder="Masukkan pesan untuk piyo"
+          placeholder="Pesanmu..."
         ></textarea>
+        <div class="iti iti--allow-dropdown" style="margin-bottom: 20px;">
+          <div class="iti__flag-container">
+            <div
+              class="iti__selected-flag"
+              role="combobox"
+              aria-owns="country-listbox"
+              tabindex="0"
+              title="Indonesia : +62"
+            >
+              <div class="iti__flag"></div>
+              <div class="iti__arrow"></div>
+            </div>
+          </div>
+          <input
+            type="tel"
+            id="phone"
+            class="form-control"
+            style="width: 51vh"
+            autocomplete="off"
+            data-intl-tel-input-id="0"
+            placeholder="Nomor Whatsaap Kamu"
+          />
+        </div>
+        <div class="iti iti--allow-dropdown">
+          <div class="iti__flag-container">
+            <div
+              class="iti__selected-flag"
+              role="combobox"
+              aria-owns="country-listbox"
+              tabindex="0"
+              title="Indonesia : +62"
+            >
+              <div class="iti__flag"></div>
+              <div class="iti__arrow"></div>
+            </div>
+          </div>
+          <input
+            type="tel"
+            id="phone2"
+            class="form-control"
+            style="width: 51vh"
+            autocomplete="off"
+            data-intl-tel-input-id="0"
+            placeholder="Nomor Whatsaap Dia"
+          />
+        </div>
         <div class="separator"></div>
         <div class="file-input-container" id="fileInputContainer">
           <input
@@ -84,13 +142,25 @@
     </div>
 
     <div id="loadingOverlay">Loading...</div>
-
-   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://js.bytescale.com/sdk/v3"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.4"></script>
-    <script src="nsfw.js"></script>
+    <script src="https://kirim-pesan-piyo.vercel.app/nsfw.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.19/build/js/intlTelInput.min.js"></script>
     <script>
-      const nsfwjs = require('nsfwjs');
+      const input = document.querySelector("#phone");
+      const input2 = document.querySelector("#phone2");
+    </script>
+    <script>
+      const iti = intlTelInput(input);
+      iti.setCountry("id");
+      const iti2 = intlTelInput(input2);
+      iti2.setCountry("id");
+    </script>
+    <script>
+      const nsfwjs = require("nsfwjs");
     </script>
     <script src="katakotor.js"></script>
     <script src="index.js"></script>
