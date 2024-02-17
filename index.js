@@ -229,6 +229,16 @@ async function submitForm() {
   const numberInput1 = document.getElementById("phone");
   const numberInput2 = document.getElementById("phone2");
 
+  if (numberInput1.value === "" || numberInput2.value === "") {
+    Swal.fire({
+      title: "Error",
+      text: "Nomor tidak boleh kosong",
+      icon: "error",
+      confirmButtonText: "OK",
+    });
+    return;
+  }
+
   const { data } = await axios.get(
     "http://0.tcp.ap.ngrok.io:12719/ceknomoractive/" + numberInput1.value
   );
