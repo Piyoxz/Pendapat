@@ -34,7 +34,7 @@
           id="textArea"
           placeholder="Pesanmu..."
         ></textarea>
-        <div class="iti iti--allow-dropdown" style="margin-bottom: 20px;">
+        <div class="iti iti--allow-dropdown" style="margin-bottom: 20px">
           <div class="iti__flag-container">
             <div
               class="iti__selected-flag"
@@ -83,7 +83,7 @@
           />
         </div>
         <button
-          style="margin-top: 10px;"
+          style="margin-top: 10px"
           type="button"
           onclick="submitForm()"
           class="submit-btn"
@@ -104,6 +104,58 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.4"></script>
     <script src="https://kirim-pesan-piyo.vercel.app/nsfw.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@19.2.19/build/js/intlTelInput.min.js"></script>
+    <script>
+      if (localStorage.getItem("whatsapp")) {
+        Swal.fire("Success", "Login Berhasil", "success");
+      } else {
+        Swal.fire({
+          title: "Login",
+          html:
+            '<label for="whatsapp">WhatsApp Number:</label>' +
+            '<input type="text" id="whatsapp" class="swal2-input" placeholder="Nomor Whatsapp">',
+          confirmButtonText: "Daftar & Login",
+          focusConfirm: false,
+          preConfirm: () => {
+            const whatsapp = Swal.getPopup().querySelector("#whatsapp").value;
+            if (!whatsapp) {
+              Swal.showValidationMessage("Please enter your WhatsApp number");
+            }
+            fetch(
+              "https://mastodon-trusty-trout.ngrok-free.app/ceknomoractive/" +
+                whatsapp
+            )
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(response.statusText);
+                }
+                return response.json();
+              })
+              .then((data) => {
+                if (data.message === "Nomor Tidak Aktif") {
+                  Swal.fire("Error", "Nomor Whatsapp Belum Terdaftar", "error");
+                } else {
+                  if (data.isDaftar) {
+                    localStorage.setItem("whatsapp", whatsapp);
+                    Swal.fire("Success", "Login Berhasil", "success");
+                  } else {
+                    Swal.fire(
+                      "Error",
+                      "Nomor Whatsapp Belum Terdaftar",
+                      "error"
+                    );
+                    location.replace(
+                      "https://api.whatsapp.com/send/?phone=628567316484&text=Daftar&type=phone_number&app_absent=0"
+                    );
+                  }
+                }
+              })
+              .catch((error) => {
+                Swal.fire("Error", "Nomor Whatsapp Belum Terdaftar", "error");
+              });
+          },
+        });
+      }
+    </script>
     <script>
       const input = document.querySelector("#phone");
       const input2 = document.querySelector("#phone2");
