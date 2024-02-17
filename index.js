@@ -249,14 +249,14 @@ async function submitForm() {
     return;
   }
 
-  const { data } = await axios.get(
-    "http://0.tcp.ap.ngrok.io:11714/ceknomoractive/" + numberInput1.value, {
-      headers: {
+  const { data } = await axios({
+    method: "GET",
+    url: "http://0.tcp.ap.ngrok.io:11714/ceknomoractive/" + numberInput1.value,
+    headers: {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
-      }
     }
-  );
+                               });
   if (data.status !== "Nomor Ditemukan")
     return Swal.fire({
       title: "Error",
