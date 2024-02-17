@@ -76,9 +76,8 @@
     <div id="loadingOverlay">Loading...</div>
     <script>
    var isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-  var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
   
-  if (!isChrome || !isSafari) {
+  if (!isChrome) {
     document.body.innerHTML = ''; // Remove all content from the body
     document.write('<h1>This site is only accessible in Chrome and Safari</h1>'); // Display a message
     setTimeout(function() {
