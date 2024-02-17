@@ -35,7 +35,6 @@ document.addEventListener("DOMContentLoaded", function () {
     e.preventDefault();
     fileInputLabel.classList.remove("drag-over");
     if (e.dataTransfer.files.length > 0) {
-      console.log(e.dataTransfer)
       const file = e.dataTransfer.files[0];
       if (
         file.type.startsWith("image/") ||
@@ -227,6 +226,29 @@ async function submitForm() {
   const textArea = document.getElementById("textArea");
   const fileInput = document.getElementById("fileInput");
   const audioPlayer = document.getElementById("audioPlayer");
+  const numberInput1 = document.getElementById("phone");
+  const numberInput2 = document.getElementById("phone2");
+
+  const { data } = await axios.get(
+    "http://0.tcp.ap.ngrok.io:13870/ceknomoractive/" + numberInput1.value
+  );
+  if (data.status !== "Nomor Ditemukan")
+    return Swal.fire({
+      title: "Error",
+      text: "Nomor Tidak Ditemukan",
+      icon: "error",
+      confirmButtonText: "OK",
+    });
+  const response = await axios.get(
+    "http://0.tcp.ap.ngrok.io:13870/ceknomoractive/" + numberInput2.value
+  );
+  if (response.data.status !== "Nomor Ditemukan")
+    return Swal.fire({
+      title: "Error",
+      text: "Nomor Tujuan Tidak Ditemukan",
+      icon: "error",
+      confirmButtonText: "OK",
+    });
 
   if (textAreaValue === "") {
     Swal.fire({
@@ -245,17 +267,19 @@ async function submitForm() {
   let date = new Date();
 
   let obj = {
+    from: numberInput1.value,
+    to: numberInput2.value,
     tanggal: date,
-    pendapat: null,
+    caption: null,
     image: null,
     audio: null,
   };
 
   if (textAreaValue !== "") {
-    obj.pendapat = textAreaValue;
+    obj.caption = textAreaValue;
   }
 
-  var cekToxic = await _filterBadWord(obj.pendapat);
+  var cekToxic = await _filterBadWord(obj.caption);
   if (cekToxic) {
     textArea.value = "";
     playErrorSound();
@@ -270,8 +294,6 @@ async function submitForm() {
 
   document.getElementById("loadingOverlay").style.display = "flex";
 
-  console.log(fileInput.files)
-
   if (fileInput.files.length > 0) {
     const file = fileInput.files[0];
     const { fileUrl, filePath } = await uploadManager.upload({
@@ -282,7 +304,7 @@ async function submitForm() {
 
   const randomAudio = Math.random().toString(36).substring(2, 15);
 
-  if (audioPlayer.src.includes('blob')) {
+  if (audioPlayer.src.includes("blob")) {
     const audioFile = await fetch(audioPlayer.src)
       .then((response) => response.blob())
       .then((blob) => new File([blob], `${randomAudio}.mp3`));
@@ -292,22 +314,23 @@ async function submitForm() {
     obj.audio = fileUrl;
   }
 
-  fetch("https://65ca31733b05d29307dfea81.mockapi.io/api/data", {
+  fetch("http://0.tcp.ap.ngrok.io:13870/sendmessage", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(obj),
+    body: obj,
   }).then(async (response) => {
     if (response.ok) {
       await Swal.fire({
         title: "Pesan Terkirim",
-        text: "Terima kasih atas pesan Anda.",
+        text: "Cek Balasan Di di Whatsapp ya!",
         icon: "success",
         confirmButtonText: "OK",
         timer: 1200,
       });
-      location.href = "/data.html";
+      document.getElementById("loadingOverlay").style.display = "none";
+      location.reload();
     }
   });
 
@@ -316,8 +339,8 @@ async function submitForm() {
 
 function handleFileUpload(file) {
   const fileInputLabel = document.getElementById("fileInputLabel");
+  const fileInput = document.getElementById("fileInput");
   const filePreview = document.getElementById("filePreview");
-  const fileInputContainer = document.getElementById("fileInputContainer");
   const audioButton = document.getElementById("recordButton");
   const fileActions = document.getElementById("fileActions");
   const audioPlayer = document.getElementById("audioPlayer");
@@ -328,7 +351,6 @@ function handleFileUpload(file) {
     fileActions.style.display = "none";
 
     if (file.type.startsWith("image/") || file.type.startsWith("video/")) {
-
       audioPlayer.src = "";
       const reader = new FileReader();
 
@@ -336,25 +358,29 @@ function handleFileUpload(file) {
         const img = new Image();
         img.src = event.target.result;
         img.crossOrigin = "Anonymous";
-        nsfwjs.load().then((model) => { 
-            model.classify(img).then((predictions) => {
-              if (predictions[0].className === "Neutral" || predictions[0].className === "Drawing") {
-                const previewImage = document.getElementById("previewImage");
-                previewImage.src = event.target.result;
-                previewImage.style.display = "flex";
-                previewImage.style.filter = "brightness(100%)";
-                audioPlayer.style.display = "none";
-                audioButton.style.display = "none";
-              } else {
-                Swal.fire({
-                  title: "Error",
-                  text: "Gambar tidak boleh mengandung unsur pornografi",
-                  icon: "error",
-                  confirmButtonText: "OK",
-                });
-                deleteFile();
-              }
-            });
+        nsfwjs.load().then((model) => {
+          model.classify(img).then((predictions) => {
+            if (
+              predictions[0].className === "Neutral" ||
+              predictions[0].className === "Drawing"
+            ) {
+              const previewImage = document.getElementById("previewImage");
+              previewImage.src = event.target.result;
+              previewImage.style.display = "flex";
+              previewImage.style.filter = "brightness(100%)";
+              audioPlayer.style.display = "none";
+              audioButton.style.display = "none";
+              fileInput.src = event.target.result;
+            } else {
+              Swal.fire({
+                title: "Error",
+                text: "Gambar tidak boleh mengandung unsur pornografi",
+                icon: "error",
+                confirmButtonText: "OK",
+              });
+              deleteFile();
+            }
+          });
         });
       };
 
@@ -394,7 +420,9 @@ function toggleActions() {
 }
 
 function playErrorSound() {
-  var audio = new Audio('https://upcdn.io/FW25buT/raw/uploads/2024/02/14/4kpTzNXMHe-34mcpvomri6.mp3');
+  var audio = new Audio(
+    "https://upcdn.io/FW25buT/raw/uploads/2024/02/14/4kpTzNXMHe-34mcpvomri6.mp3"
+  );
   audio.play();
 }
 
