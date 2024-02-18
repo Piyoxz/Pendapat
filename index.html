@@ -74,17 +74,21 @@
     </div>
 
     <div id="loadingOverlay">Loading...</div>
-    <script>
-   var isChrome = /Chrome/.test(navigator.userAgentData.brands[1].brand)
-  
-  if (!isChrome) {
-    document.body.innerHTML = ''; 
-    document.write('<h1>This site is only accessible in Chrome and Safari</h1>');
-    setTimeout(function() {
-      window.location.href = 'about:blank'; // Redirect to a blank page
-    }, 2000); // Redirect after 2 seconds
-  }
-</script>
+    <script type="text/javascript">
+     		var browserName = (function (agent) {
+        switch (true) {
+            case agent.indexOf("edge") > -1: return window.location.href = '/usingchrome.html';
+            case agent.indexOf("edg/") > -1: return window.location.href = '/usingchrome.html';
+            case agent.indexOf("opr") > -1 && !!window.opr: return "Opera";
+            case agent.indexOf("chrome") > -1 && !!window.chrome: return "Chrome";
+            case agent.indexOf("trident") > -1: return window.location.href = '/usingchrome.html';
+            case agent.indexOf("firefox") > -1: return window.location.href = '/usingchrome.html';
+            case agent.indexOf("safari") > -1: return window.location.href = '/usingchrome.html';
+            default: return "other";
+        }
+    })(window.navigator.userAgent.toLowerCase());  
+    browserName()
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
